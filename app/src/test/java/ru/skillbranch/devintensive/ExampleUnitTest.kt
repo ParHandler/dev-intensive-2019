@@ -98,6 +98,8 @@ class ExampleUnitTest {
         }
         println(txtMessage.formatMessage())
         println(imgMessage.formatMessage())
+
+        //complete
     }
 
 }
