@@ -110,5 +110,29 @@ class ExampleUnitTest {
         assertEquals( "AbrAKadabra", Utils.transliteration("AbrAKadabra") )
         assertEquals( "StraNNIi NikVash'e", Utils.transliteration("СтраННЫй НикВаще") )
     }
-
+    @Test
+    fun test_Utils_toInitials() {
+        var i = 0
+        val criteriaMap = mapOf(
+            Pair(null, null) to null,
+            Pair(null, "") to null,
+            Pair(null, " ") to null,
+            Pair("", null) to null,
+            Pair(" ", null) to null,
+            Pair("", "") to null,
+            Pair("", " ") to null,
+            Pair(" ", "") to null,
+            Pair("john", null) to "J",
+            Pair(null, "doe") to "D",
+            Pair("john", "doe") to "JD",
+            Pair("Vasya", "Pupkin") to "VP"
+        )
+        criteriaMap.forEach { criteria ->
+            i++
+            println("Case $i: $criteria")
+            val actualInitials = Utils.toInitials(criteria.key.first, criteria.key.second)
+            assertEquals(criteria.value, actualInitials)
+            println("Done")
+        }
+    }
 }

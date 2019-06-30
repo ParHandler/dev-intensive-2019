@@ -86,7 +86,23 @@ object Utils {
     }
 
     fun toInitials(firstName: String?, lastName: String?): String? {
-        TODO("not implemented")
+//        *toInitials
+//        Необходимо реализовать утилитный метод toInitials(firstName lastName),
+//        принимающий в качестве аргументов имя и фамилию пользователя и возвращающий его инициалы
 
+        val firstNameInitial = firstName?.firstOrNull()
+        val lastNameInitial = lastName?.firstOrNull()
+
+
+        return when(Pair(firstNameInitial,lastNameInitial)) {
+            Pair(null, null) -> null
+            Pair(null, "") -> null
+            Pair(null, ' ') -> null
+            Pair("", null) -> null
+            Pair(' ', null) -> null
+            Pair(firstNameInitial, null) -> firstNameInitial.toString().toUpperCase()
+            Pair(null, lastNameInitial) -> lastNameInitial.toString().toUpperCase()
+            else -> firstNameInitial.toString().plus(lastNameInitial.toString()).toUpperCase()
+        }
     }
 }
