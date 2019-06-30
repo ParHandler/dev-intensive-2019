@@ -9,6 +9,7 @@ import ru.skillbranch.devintensive.extensions.add
 import ru.skillbranch.devintensive.extensions.format
 import ru.skillbranch.devintensive.extensions.toUserView
 import ru.skillbranch.devintensive.models.*
+import ru.skillbranch.devintensive.utils.Utils
 import java.util.*
 
 /**
@@ -100,6 +101,14 @@ class ExampleUnitTest {
         println(imgMessage.formatMessage())
 
         //complete
+    }
+
+    @Test
+    fun test_transliteration(){
+        assertEquals( "Zh Zh", Utils.transliteration("Ж Ж") )
+        assertEquals( "ZhZh", Utils.transliteration("ЖЖ") )
+        assertEquals( "AbrAKadabra", Utils.transliteration("AbrAKadabra") )
+        assertEquals( "StraNNIi NikVash'e", Utils.transliteration("СтраННЫй НикВаще") )
     }
 
 }
