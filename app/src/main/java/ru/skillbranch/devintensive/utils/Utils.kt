@@ -2,13 +2,17 @@ package ru.skillbranch.devintensive.utils
 
 object Utils {
     fun parseFullName(fullName: String?): Pair<String?, String?> {
-        //TODO t:50:19?
         val parts: List<String>? = fullName?.split(" ")
 
-        val firstName = parts?.getOrNull(0)
-        val lastName = parts?.getOrNull(1)
-        return Pair(firstName, lastName)
+        var firstName = parts?.getOrNull(0)
+        if (firstName == "") firstName = null
+
+        var lastName = parts?.getOrNull(1)
+        if (lastName == "") lastName = null
+
+        return firstName to lastName
     }
+
 
     fun transliteration(payload: String, divider: String = " "): String {
         var lat: String = payload.replace("а".toRegex(), "a")
@@ -72,15 +76,17 @@ object Utils {
         lat = lat.replace("Ф".toRegex(), "F")
         lat = lat.replace("Х".toRegex(), "H")
         lat = lat.replace("Ц".toRegex(), "C")
-        lat = lat.replace("Ч".toRegex(), "CH")
-        lat = lat.replace("Ш".toRegex(), "SH")
+        lat = lat.replace("Ч".toRegex(), "Ch")
+        lat = lat.replace("Ш".toRegex(), "Sh")
         lat = lat.replace("Щ".toRegex(), "Sh'")
         lat = lat.replace("Ъ".toRegex(), "")
         lat = lat.replace("Ы".toRegex(), "I")
         lat = lat.replace("Ь".toRegex(), "")
         lat = lat.replace("Э".toRegex(), "E")
-        lat = lat.replace("Ю".toRegex(), "YU")
+        lat = lat.replace("Ю".toRegex(), "Yu")
         lat = lat.replace("Я".toRegex(), "YA")
+
+        lat = lat.replace(" ".toRegex(), divider)
 
         return lat //Return latinized string
     }

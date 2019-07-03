@@ -40,6 +40,16 @@ class ExampleUnitTest {
     }
 
     @Test
+    fun test_parseFullName() {
+        assertEquals(Pair(null, null), Utils.parseFullName(null))
+        assertEquals(Pair(null, null), Utils.parseFullName(""))
+        assertEquals(Pair(null, null), Utils.parseFullName(" "))
+        assertEquals(Pair("John", null), Utils.parseFullName("John"))
+        assertEquals(Pair("John", "Wick"), Utils.parseFullName("John Wick"))
+        assertEquals(Pair(null, "Wick"), Utils.parseFullName(" Wick"))
+    }
+
+    @Test
     fun test_decomposition (){
         val user = User.makeUser("John Wick")
         fun getUserInfo() = user
@@ -107,6 +117,11 @@ class ExampleUnitTest {
         assertEquals( "ZhZh", Utils.transliteration("ЖЖ") )
         assertEquals( "AbrAKadabra", Utils.transliteration("AbrAKadabra") )
         assertEquals( "StraNNIi NikVash'e", Utils.transliteration("СтраННЫй НикВаще") )
+        assertEquals("Ivan Stereotipov", Utils.transliteration("Иван Стереотипов"))
+        assertEquals("mi[_mi_]mi", Utils.transliteration("mi[_mi_]mi", "_"))
+        assertEquals("Amazing_Petr", Utils.transliteration("Amazing Петр", "_"))
+        assertEquals("ZhZh", Utils.transliteration("ЖЖ"))
+        assertEquals("puShok", Utils.transliteration("пуШок"))
     }
     @Test
     fun test_Utils_toInitials() {
