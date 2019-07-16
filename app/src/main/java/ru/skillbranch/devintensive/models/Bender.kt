@@ -12,9 +12,9 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
 
     fun listenAnswer(answer: String): Pair<String, Triple<Int, Int, Int>> {
         return if(question.answers.contains(answer)) {
-            //TODO t:1:53
             "Отлично - это правильный ответ" to status.color
         }else{
+            status  = status.nextStatus()
             "Это не правильный ответ!" to status.color
         }
     }
@@ -24,14 +24,26 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
         WARNING(Triple(255, 120, 0)),
         DANGER(Triple(255, 60, 60)),
         CRITICAL(Triple(255, 0, 0))
+
+        fun nextStatus(): Status {
+            return if(this.ordinal<values().lastIndex){
+                values()[this.ordinal+1]
+            }else{
+                values()[0]
+            }
+
+        }
     }
 
     enum class Question(val question: String, val answers: List<String>) {
         NAME("Как меня зовут?", listOf("бендер", "bender")),
+        //TODO t:1:55
         PROFESSION("Назови мою профессию?", listOf("сгибальщик", "bender")),
         MATERIAL("Из чего я сделан?", listOf("металл", "дерево", "metal", "iron", "wood")),
         BDAY("Когда меня создали?", listOf("2993")),
         SERIAL("Мой серийный номер?", listOf("2716057")),
-        IDLE("На этом все, вопросов больше нет", listOf())
+        IDLE("На этом все, вопросов больше нет", listOf());
+
+        abstract fun nextQuestion(): Question
     }
 }
