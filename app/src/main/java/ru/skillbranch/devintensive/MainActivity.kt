@@ -6,6 +6,7 @@ import android.graphics.PorterDuff
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Message
+import android.os.PersistableBundle
 import android.provider.ContactsContract
 import android.util.Log
 import android.view.View
@@ -27,17 +28,23 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        Log.d("M_MainActivity","onCreate")
 
 //        benderImage = findViewById(R.id.iv_bender) as ImageView
         benderImage = iv_bender
         textTxt = tv_text
         messageEt = et_message
         sendBtn = iv_send
-        benderObj = Bender()
+
+        val status = savedInstanceState?.getString("STATUS") ?: Bender.Status.NORMAL.name
+        val question = savedInstanceState?.getString("QUESTION") ?: Bender.Question.NAME.name
+        benderObj = Bender(Bender.Status.valueOf(status), Bender.Question.valueOf(question))
+
+        Log.d("M_MainActivity","onCreate $status $question")
+
+        val(r,g,b) = benderObj.status.color
+        benderImage.setColorFilter(Color.rgb(r,g,b), PorterDuff.Mode.MULTIPLY)
 
         textTxt.text = benderObj.askQuestions()
-
         sendBtn.setOnClickListener(this)
     }
 
@@ -70,6 +77,16 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         super.onDestroy()
         Log.d("M_MainActivity","onDestroy")
     }
+
+    override fun onSaveInstanceState(outState: Bundle?) {
+        //TODO t:2:04:10
+        super.onSaveInstanceState(outState)
+
+        outState?.putString("STATUS", benderObj.status.name)
+        outState?.putString("QUESTION", benderObj.question.name)
+        Log.d("M_MainActivity", "onSaveInstanceState ${benderObj.status.name} ${benderObj.question.name}")
+    }
+
     override fun onClick(v: View?) {
         if(v?.id == R.id.iv_send){
             val (phrase, color) = benderObj.listenAnswer(messageEt.text.toString().toLowerCase())
