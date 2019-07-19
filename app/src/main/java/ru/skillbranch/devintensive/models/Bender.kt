@@ -10,13 +10,21 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
         Question.IDLE -> Question.IDLE.question
     }
 
+    /*
+    При вводе неверного ответа более 3 раз сбросить состояние сущности Bender на значение по умолчанию
+     (status = Status.NORMAL, question = Question.NAME) и вернуть
+     "Это неправильный ответ. Давай все по новой\n${question.question}" to status.color и изменить
+     цвет ImageView (iv_bender) на цвет status.color
+     Необходимо сохранять состояние экземпляра класса Bender при пересоздании Activity
+     (достаточно сохранить Status, Question)
+     */
     fun listenAnswer(answer: String): Pair<String, Triple<Int, Int, Int>> {
         return if(question.answers.contains(answer)) {
             question = question.nextQuestion()
             "Отлично - ты справился\n${question.question}" to status.color
         }else{
             status  = status.nextStatus()
-            "Это не правильный ответ!\nqqq ${question.question}" to status.color
+            "Это неправильный ответ\n${question.question}" to status.color
         }
     }
 
