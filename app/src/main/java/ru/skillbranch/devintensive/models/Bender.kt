@@ -57,23 +57,30 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
     enum class Question(val question: String, val answers: List<String>) {
         NAME("Как меня зовут?", listOf("бендер", "bender")) {
             override fun nextQuestion(): Question = PROFESSION
+            override fun validateAnswer(answer: String): Boolean = true
         },
         PROFESSION("Назови мою профессию?", listOf("сгибальщик", "bender")) {
             override fun nextQuestion(): Question = MATERIAL
+            override fun validateAnswer(answer: String): Boolean = true
         },
         MATERIAL("Из чего я сделан?", listOf("металл", "дерево", "metal", "iron", "wood")) {
             override fun nextQuestion(): Question = BDAY
+            override fun validateAnswer(answer: String): Boolean = true
         },
         BDAY("Когда меня создали?", listOf("2993")) {
             override fun nextQuestion(): Question = SERIAL
+            override fun validateAnswer(answer: String): Boolean = true
         },
         SERIAL("Мой серийный номер?", listOf("2716057")) {
             override fun nextQuestion(): Question = IDLE
+            override fun validateAnswer(answer: String): Boolean = true
         },
         IDLE("На этом все, вопросов больше нет", listOf()) {
             override fun nextQuestion(): Question = IDLE
+            override fun validateAnswer(answer: String): Boolean = true
         };
 
         abstract fun nextQuestion(): Question
+        abstract fun validateAnswer(answer: String):Boolean
     }
 }
