@@ -9,7 +9,9 @@ import android.os.Message
 import android.os.PersistableBundle
 import android.provider.ContactsContract
 import android.util.Log
+import android.view.KeyEvent
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ImageView
@@ -46,6 +48,15 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         textTxt.text = benderObj.askQuestions()
         sendBtn.setOnClickListener(this)
+        onClickDoneButton(messageEt)
+    }
+
+    private fun onClickDoneButton(editText: EditText) {
+        editText.setOnEditorActionListener { _: TextView?, i: Int, _: KeyEvent? ->
+            if (i == EditorInfo.IME_ACTION_DONE) sendBtn.callOnClick()
+            false
+        }
+
     }
 
     override fun onRestart() {
@@ -79,7 +90,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {
-        //TODO t:2:04:10
         super.onSaveInstanceState(outState)
 
         outState?.putString("STATUS", benderObj.status.name)
