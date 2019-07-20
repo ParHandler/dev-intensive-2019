@@ -1,5 +1,5 @@
 package ru.skillbranch.devintensive
-/*
+
 import android.graphics.Rect
 import android.view.View
 import androidx.test.espresso.Espresso
@@ -37,4 +37,3 @@ class Task4 {
         assertTrue(openKeyboardHeight > closedKeyboardHeight)
     }
 }
-        */
