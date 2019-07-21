@@ -18,6 +18,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import kotlinx.android.synthetic.main.activity_main.*
 import ru.skillbranch.devintensive.models.Bender
+import ru.skillbranch.devintensive.models.Bender.Question
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
     lateinit var benderImage: ImageView
@@ -31,7 +32,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-//        benderImage = findViewById(R.id.iv_bender) as ImageView
         benderImage = iv_bender
         textTxt = tv_text
         messageEt = et_message
@@ -58,6 +58,20 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         }
 
     }
+
+    private fun showValidationAnswer () {
+        val validationAnswer = when(benderObj.question) {
+            Question.NAME -> "Имя должно начинаться с заглавной буквы"
+            Question.PROFESSION -> "Профессия должна начинаться со строчной буквы"
+            Question.MATERIAL -> "Материал не должен содержать цифр"
+            Question.BDAY -> "Год моего рождения должен содержать только цифры"
+            Question.SERIAL -> "Серийный номер содержит только цифры, и их 7"
+            Question.IDLE -> "На этом все, вопросов больше нет"
+        }
+        textTxt.text = "${validationAnswer}\n${benderObj.question.question}"
+        messageEt.setText("")
+    }
+    private fun isValidAnswer() : Boolean = benderObj.question.validateAnswer(messageEt.text.toString())
 
     override fun onRestart() {
         super.onRestart()
@@ -98,12 +112,14 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onClick(v: View?) {
-        if(v?.id == R.id.iv_send){
-            val (phrase, color) = benderObj.listenAnswer(messageEt.text.toString().toLowerCase())
-            messageEt.setText("")
-            val(r,g,b) = color
-            benderImage.setColorFilter(Color.rgb(r,g,b), PorterDuff.Mode.MULTIPLY)
-            textTxt.text = phrase
+        if (v?.id == R.id.iv_send) {
+            if (isValidAnswer()) {
+                val (phrase, color) = benderObj.listenAnswer(messageEt.text.toString().toLowerCase().trim())
+                messageEt.setText("")
+                val (r, g, b) = color
+                benderImage.setColorFilter(Color.rgb(r, g, b), PorterDuff.Mode.MULTIPLY)
+                textTxt.text = phrase
+            } else this.showValidationAnswer()
         }
     }
 }

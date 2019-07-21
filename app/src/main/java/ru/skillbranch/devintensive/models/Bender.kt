@@ -57,23 +57,23 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
     enum class Question(val question: String, val answers: List<String>) {
         NAME("Как меня зовут?", listOf("бендер", "bender")) {
             override fun nextQuestion(): Question = PROFESSION
-            override fun validateAnswer(answer: String): Boolean = true
+            override fun validateAnswer(answer: String): Boolean = answer.first().isUpperCase()
         },
         PROFESSION("Назови мою профессию?", listOf("сгибальщик", "bender")) {
             override fun nextQuestion(): Question = MATERIAL
-            override fun validateAnswer(answer: String): Boolean = true
+            override fun validateAnswer(answer: String): Boolean = answer.first().isLowerCase()
         },
         MATERIAL("Из чего я сделан?", listOf("металл", "дерево", "metal", "iron", "wood")) {
             override fun nextQuestion(): Question = BDAY
-            override fun validateAnswer(answer: String): Boolean = true
+            override fun validateAnswer(answer: String): Boolean = !answer.contains(Regex("\\d"))
         },
         BDAY("Когда меня создали?", listOf("2993")) {
             override fun nextQuestion(): Question = SERIAL
-            override fun validateAnswer(answer: String): Boolean = true
+            override fun validateAnswer(answer: String): Boolean = answer.matches(Regex("[0-9]+"))
         },
         SERIAL("Мой серийный номер?", listOf("2716057")) {
             override fun nextQuestion(): Question = IDLE
-            override fun validateAnswer(answer: String): Boolean = true
+            override fun validateAnswer(answer: String): Boolean = answer.matches(Regex("[0-9]+"))&& answer.length==7
         },
         IDLE("На этом все, вопросов больше нет", listOf()) {
             override fun nextQuestion(): Question = IDLE
