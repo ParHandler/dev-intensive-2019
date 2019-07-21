@@ -57,7 +57,7 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
     enum class Question(val question: String, val answers: List<String>) {
         NAME("Как меня зовут?", listOf("бендер", "bender")) {
             override fun nextQuestion(): Question = PROFESSION
-            override fun validateAnswer(answer: String): Boolean = answer.first().isUpperCase()
+            override fun validateAnswer(answer: String): Boolean? = answer.firstOrNull()?.isUpperCase()
         },
         PROFESSION("Назови мою профессию?", listOf("сгибальщик", "bender")) {
             override fun nextQuestion(): Question = MATERIAL
@@ -81,6 +81,6 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
         };
 
         abstract fun nextQuestion(): Question
-        abstract fun validateAnswer(answer: String):Boolean
+        abstract fun validateAnswer(answer: String):Boolean?
     }
 }

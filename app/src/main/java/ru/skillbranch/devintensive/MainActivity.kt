@@ -17,6 +17,7 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.annotations.NotNull
 import ru.skillbranch.devintensive.models.Bender
 import ru.skillbranch.devintensive.models.Bender.Question
 
@@ -71,7 +72,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         textTxt.text = "${validationAnswer}\n${benderObj.question.question}"
         messageEt.setText("")
     }
-    private fun isValidAnswer() : Boolean = benderObj.question.validateAnswer(messageEt.text.toString())
+    private fun isValidAnswer() : Boolean = benderObj.question.validateAnswer(messageEt.text.toString()) ?: false
 
     override fun onRestart() {
         super.onRestart()
