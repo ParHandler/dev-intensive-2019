@@ -1,5 +1,5 @@
 package ru.skillbranch.devintensive
-/*
+
 
 
 import androidx.test.espresso.Espresso
@@ -53,4 +53,3 @@ class Task7 {
         rotateScreen(rule.activity, false)
     }
 }
-        */
