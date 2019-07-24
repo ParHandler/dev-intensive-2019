@@ -1,27 +1,22 @@
-package ru.skillbranch.devintensive
+package ru.skillbranch.devintensive.ui.profile
 
 import android.graphics.Color
-import android.graphics.ColorFilter
 import android.graphics.PorterDuff
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Message
-import android.os.PersistableBundle
-import android.provider.ContactsContract
 import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
-import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import kotlinx.android.synthetic.main.activity_main.*
-import org.jetbrains.annotations.NotNull
+import ru.skillbranch.devintensive.R
 import ru.skillbranch.devintensive.models.Bender
 import ru.skillbranch.devintensive.models.Bender.Question
 
-class MainActivity : AppCompatActivity(), View.OnClickListener {
+class ProfileActivity : AppCompatActivity(), View.OnClickListener {
     lateinit var benderImage: ImageView
     lateinit var textTxt: TextView
     lateinit var messageEt: EditText
