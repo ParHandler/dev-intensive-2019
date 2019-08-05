@@ -11,7 +11,7 @@ import ru.skillbranch.devintensive.repositories.PreferencesRepository
 
 class ProfileViewModel : ViewModel() {
     private val repository: PreferencesRepository = PreferencesRepository
-    private val profileData = MutableLiveData<Profile>()
+    private val profileData = MutableLiveData<Profile?>()
     private val appTheme = MutableLiveData<Int>()
 
     init {
@@ -26,7 +26,7 @@ class ProfileViewModel : ViewModel() {
     }
 
 
-    fun getProfileData() : LiveData<Profile> = profileData
+    fun getProfileData() : LiveData<Profile?> = profileData
 
     fun getTheme():LiveData<Int> = appTheme
 

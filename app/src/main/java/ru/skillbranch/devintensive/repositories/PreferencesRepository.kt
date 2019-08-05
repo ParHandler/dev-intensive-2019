@@ -27,14 +27,7 @@ object PreferencesRepository {
 
     fun getAppTheme():Int = prefs.getInt(APP_THEME, AppCompatDelegate.MODE_NIGHT_NO)
 
-    fun getProfileData():Profile?{
-        TODO("Not implemented")
 
-    }
-
-    fun saveProfileData(profile: Profile){
-        TODO("Not implemented")
-    }
 
     fun getProfile(): Profile? = Profile(
         prefs.getString(FIRST_NAME, "")!!,
