@@ -52,10 +52,10 @@ class ProfileActivity : AppCompatActivity() {
         delegate.setLocalNightMode(mode)
     }
 
-    private fun updateUI(profile: Profile?) {
-        profile?.toMap().also {
+    private fun updateUI(profile: Profile) {
+        profile.toMap().also {
             for ((k,v) in viewFields){
-                v.text = it?.get(k).toString()
+                v.text = it[k].toString()
             }
         }
     }
