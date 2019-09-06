@@ -32,8 +32,25 @@ class ChatAdapter : RecyclerView.Adapter<ChatAdapter.SingleViewHolder>() {
         override val containerView : View?
                 get() = itemView
         fun bind(item:ChatItem){
-            iv_avatar_single.setInitials(item.initials)
+            if (item.avatar == null) {
+                iv_avatar_single.setInitials(item.initials)
+            } else {
+                //TODO set drawable
+            }
+
+            sv_indicator.visibility = if(item.isOnline) View.VISIBLE else View.GONE
+            with(tv_date_single) {
+                visibility = if(item.lastMessageDate !== null) View.VISIBLE else View.GONE
+                text = item.lastMessageDate
+            }
+
+            with(tv_counter_single) {
+                visibility = if(item.messageCount>0) View.VISIBLE else View.GONE
+                text = item.messageCount.toString()
+            }
+
             tv_title_single.text = item.shortDescription
+            tv_message_single.text
         }
     }
 
