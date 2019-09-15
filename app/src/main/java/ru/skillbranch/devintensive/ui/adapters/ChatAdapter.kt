@@ -28,12 +28,17 @@ class ChatAdapter : RecyclerView.Adapter<ChatAdapter.SingleViewHolder>() {
         holder.bind(items[position])
      }
 
+    fun updateData(data : List<ChatItem>) {
+        items = data
+        notifyDataSetChanged()
+    }
+
     inner class SingleViewHolder(convertView: View) : RecyclerView.ViewHolder(convertView), LayoutContainer {
         override val containerView : View?
                 get() = itemView
         fun bind(item:ChatItem){
             if (item.avatar == null) {
-                iv_avatar_single.setInitials(item.initials)
+                //iv_avatar_single.setInitials(item.initials) //TODO setInitials
             } else {
                 //TODO set drawable
             }
@@ -49,8 +54,8 @@ class ChatAdapter : RecyclerView.Adapter<ChatAdapter.SingleViewHolder>() {
                 text = item.messageCount.toString()
             }
 
-            tv_title_single.text = item.shortDescription
-            tv_message_single.text
+            tv_title_single.text = item.title
+            tv_message_single.text = item.shortDescription
         }
     }
 

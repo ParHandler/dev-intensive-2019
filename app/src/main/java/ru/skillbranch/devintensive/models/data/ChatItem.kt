@@ -1,5 +1,6 @@
 package ru.skillbranch.devintensive.models.data
 
+
 data class ChatItem (
     val id: String,
     val avatar: String?,
@@ -12,6 +13,3 @@ data class ChatItem (
     val chatType : ChatType = ChatType.SINGLE,
     var author :String? = null
 )
-{
-
-}

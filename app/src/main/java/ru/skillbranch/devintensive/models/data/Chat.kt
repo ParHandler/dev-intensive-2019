@@ -5,7 +5,6 @@ import ru.skillbranch.devintensive.extensions.shortFormat
 import ru.skillbranch.devintensive.models.BaseMessage
 import ru.skillbranch.devintensive.models.ImageMessage
 import ru.skillbranch.devintensive.models.TextMessage
-import ru.skillbranch.devintensive.models.User
 import ru.skillbranch.devintensive.utils.Utils
 import java.util.*
 
@@ -17,18 +16,16 @@ data class Chat(
     var isArchived: Boolean = false
 ) {
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    fun unreadableMessageCount(): Int {
-        //TODO implement me
-    }
+    fun unreadableMessageCount(): Int = messages.count { !it.isReaded }
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    fun lastMessageDate(): Date? {
-        //TODO implement me
-    }
+    fun lastMessageDate(): Date? = messages.lastOrNull()?.date
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    fun lastMessageShort(): Pair<String, String?> = when(val lastMessage = messages.lastOrNull()){
-        //TODO implement me
+    fun lastMessageShort(): Pair<String, String?> = when (val lastMessage = messages.lastOrNull()) {
+        is TextMessage -> lastMessage.text!! to lastMessage.from.firstName
+        is ImageMessage -> "${lastMessage.from.firstName} - отправил фото" to lastMessage.from.firstName
+        else -> "Сообщений ещё нет" to null
     }
 
     private fun isSingle(): Boolean = members.size == 1

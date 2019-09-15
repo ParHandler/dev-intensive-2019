@@ -1,12 +1,12 @@
 package ru.skillbranch.devintensive
 
 
-import org.junit.Assert
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import ru.skillbranch.devintensive.extensions.*
 
 import ru.skillbranch.devintensive.models.*
+import ru.skillbranch.devintensive.models.data.User
 import ru.skillbranch.devintensive.utils.Utils
 import java.util.*
 
@@ -23,8 +23,15 @@ class ExampleUnitTest {
     @Test
     fun  test_instance(){
         val user = User("1")
-        val user2 = User("2", "Jonh","Cena" )
-        val user3 = User("3", "Jonh","Silverhand", null, lastVisit =  Date(), isOnline = true)
+        val user2 = User("2", "Jonh", "Cena")
+        val user3 = User(
+            "3",
+            "Jonh",
+            "Silverhand",
+            null,
+            lastVisit = Date(),
+            isOnline = true
+        )
         user.printMe()
         user2.printMe()
         user3.printMe()

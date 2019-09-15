@@ -7,11 +7,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_main.*
 import ru.skillbranch.devintensive.R
+import ru.skillbranch.devintensive.ui.adapters.ChatAdapter
 import ru.skillbranch.devintensive.viewmodels.MainViewModel
 
 class MainActivity : AppCompatActivity() {
 
-    private val chatAdapter: RecyclerView.Adapter<*>?
+    private lateinit var chatAdapter: ChatAdapter
     private lateinit var viewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,5 +37,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun initViewModel() {
         viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
+        viewModel.getChatData()
      }
 }
