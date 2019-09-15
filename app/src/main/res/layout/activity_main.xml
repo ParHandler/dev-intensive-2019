@@ -16,7 +16,8 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:popupTheme="@style/AppTheme.AppBarOverlay">
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            android:background="?attr/colorToolbar">
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -26,6 +27,15 @@
             android:layout_height="match_parent"
             android:layout_marginTop="?attr/actionBarSize"
             tools:listitem="@layout/item_chat_single"/>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/spacing_normal_16"
+            app:srcCompat = "@drawable/ic_add_black_24dp"
+            />
+
 
 
 

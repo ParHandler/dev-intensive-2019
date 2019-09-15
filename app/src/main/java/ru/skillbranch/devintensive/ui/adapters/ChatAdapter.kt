@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.item_chat_single.*
 import ru.skillbranch.devintensive.R
 import ru.skillbranch.devintensive.models.data.ChatItem
 
-class ChatAdapter : RecyclerView.Adapter<ChatAdapter.SingleViewHolder>() {
+class ChatAdapter(val listener : (ChatItem)->Unit) : RecyclerView.Adapter<ChatAdapter.SingleViewHolder>() {
     var items : List<ChatItem> = listOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SingleViewHolder {
@@ -25,7 +25,7 @@ class ChatAdapter : RecyclerView.Adapter<ChatAdapter.SingleViewHolder>() {
 
     override fun onBindViewHolder(holder: SingleViewHolder, position: Int) {
         Log.d("M_ChatAdapter","onBindViewHolder $position")
-        holder.bind(items[position])
+        holder.bind(items[position], listener)
      }
 
     fun updateData(data : List<ChatItem>) {
@@ -36,7 +36,7 @@ class ChatAdapter : RecyclerView.Adapter<ChatAdapter.SingleViewHolder>() {
     inner class SingleViewHolder(convertView: View) : RecyclerView.ViewHolder(convertView), LayoutContainer {
         override val containerView : View?
                 get() = itemView
-        fun bind(item:ChatItem){
+        fun bind(item:ChatItem, listener: (ChatItem) -> Unit){
             if (item.avatar == null) {
                 //iv_avatar_single.setInitials(item.initials) //TODO setInitials
             } else {
@@ -56,6 +56,9 @@ class ChatAdapter : RecyclerView.Adapter<ChatAdapter.SingleViewHolder>() {
 
             tv_title_single.text = item.title
             tv_message_single.text = item.shortDescription
+            itemView.setOnClickListener{
+                listener.invoke(item)
+            }
         }
     }
 
