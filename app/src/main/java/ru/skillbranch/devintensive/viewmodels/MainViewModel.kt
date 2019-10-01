@@ -28,5 +28,9 @@ class MainViewModel: ViewModel() {
         chats.value = copy.sortedBy { it.id.toInt() }
     }
 
+    fun addToArchive(id: String) {
+
+    }
+
 
 }
