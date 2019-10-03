@@ -379,7 +379,7 @@ object DataGenerator {
         }
         for (i in 0 until count) {
             val members = stabUsers.randomSublist(5, 2)
-            Log.e("DataGenerator", "$members")
+            Log.v("DataGenerator", "$members")
             val groupChat = Chat(
                 "${list.size}",
                 members.map { it.firstName }.joinToString(", "),

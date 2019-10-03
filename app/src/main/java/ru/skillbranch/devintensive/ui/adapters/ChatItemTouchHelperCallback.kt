@@ -74,7 +74,7 @@ class ChatItemTouchHelperCallback(
 
         val margin = (itemView.bottom - itemView.top - iconSize) /2
         with(iconBounds) {
-            left = itemView.left + dX.toInt() + space
+            left = itemView.right + dX.toInt() + space
             top = itemView.top + margin
             right = itemView.right + dX.toInt() + iconSize + space
             bottom = itemView.bottom - margin
