@@ -28,9 +28,15 @@ class MainViewModel: ViewModel() {
         chats.value = copy.sortedBy { it.id.toInt() }
     }
 
-    fun addToArchive(id: String) {
-
+    fun addToArchive(chatId: String) {
+        val chat = chatRepository.find(chatId)
+        chat ?: return
+        chatRepository.update(chat.copy(isArchived = true))
     }
 
-
+    fun restoreFromArchive(chatId: String){
+        val chat = chatRepository.find(chatId)
+        chat ?: return
+        chatRepository.update(chat.copy(isArchived = false))
+    }
 }

@@ -4,8 +4,17 @@ import ru.skillbranch.devintensive.models.data.Chat
 import ru.skillbranch.devintensive.utils.DataGenerator
 
 object ChatRepository {
+
     fun loadChats() : List<Chat> {
         return DataGenerator.generateChats(10)
+    }
+
+    fun update(copy: Unit) {
+
+    }
+
+    fun find(chatId: String): Chat {
+
     }
 
 }
