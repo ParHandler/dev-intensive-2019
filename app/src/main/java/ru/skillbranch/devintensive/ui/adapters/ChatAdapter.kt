@@ -13,10 +13,14 @@ import kotlinx.android.synthetic.main.item_chat_single.*
 import ru.skillbranch.devintensive.R
 import ru.skillbranch.devintensive.models.data.ChatItem
 
-class ChatAdapter(val listener : (ChatItem)->Unit) : RecyclerView.Adapter<ChatAdapter.SingleViewHolder>() {
+class ChatAdapter(val listener : (ChatItem)->Unit) : RecyclerView.Adapter<ChatAdapter.ChatItemViewHolder>() {
     var items : List<ChatItem> = listOf()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SingleViewHolder {
+    override fun getItemViewType(position: Int): Int {
+        return super.getItemViewType(position)
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatItemViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val convertView = inflater.inflate(R.layout.item_chat_single, parent, false)
         Log.d("M_ChatAdapter", "onCreateViewHolder")
@@ -25,7 +29,7 @@ class ChatAdapter(val listener : (ChatItem)->Unit) : RecyclerView.Adapter<ChatAd
 
     override fun getItemCount(): Int = items.size
 
-    override fun onBindViewHolder(holder: SingleViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ChatItemViewHolder, position: Int) {
         Log.d("M_ChatAdapter","onBindViewHolder $position")
         holder.bind(items[position], listener)
      }
@@ -49,11 +53,23 @@ class ChatAdapter(val listener : (ChatItem)->Unit) : RecyclerView.Adapter<ChatAd
         items = data
         diffResult.dispatchUpdatesTo(this)
     }
+    abstract inner class ChatItemViewHolder(convertView: View) : RecyclerView.ViewHolder(convertView), LayoutContainer{
+        override val containerView: View?
+            get()  = itemView
 
-    inner class SingleViewHolder(convertView: View) : RecyclerView.ViewHolder(convertView), LayoutContainer, ItemTouchViewHolder {
-        override val containerView : View?
-                get() = itemView
-        fun bind(item:ChatItem, listener: (ChatItem) -> Unit){
+        abstract fun bind(item: ChatItem, listener: (ChatItem) -> Unit)
+    }
+
+    inner class SingleViewHolder(convertView: View) : ChatItemViewHolder(convertView), ItemTouchViewHolder {
+        override fun onItemSelected() {
+            itemView.setBackgroundColor(Color.LTGRAY)
+        }
+
+        override fun onItemCleared() {
+            itemView.setBackgroundColor(Color.WHITE)
+        }
+
+        override fun bind(item:ChatItem, listener: (ChatItem) -> Unit){
             if (item.avatar == null) {
                 //iv_avatar_single.setInitials(item.initials) //TODO setInitials
             } else {
@@ -77,14 +93,5 @@ class ChatAdapter(val listener : (ChatItem)->Unit) : RecyclerView.Adapter<ChatAd
                 listener.invoke(item)
             }
         }
-
-        override fun onItemSelected() {
-            itemView.setBackgroundColor(Color.LTGRAY)
-        }
-
-        override fun onItemCleared() {
-            itemView.setBackgroundColor(Color.WHITE)
-        }
     }
-
 }
