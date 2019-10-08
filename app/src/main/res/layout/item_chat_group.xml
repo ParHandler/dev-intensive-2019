@@ -23,7 +23,6 @@
             android:textSize="14sp"
             android:layout_toRightOf="@id/iv_avatar_group"
             android:layout_toLeftOf="@+id/tv_date_group"
-            android:layout_marginLeft="@dimen/spacing_normal_16"
             android:layout_marginRight="@dimen/spacing_normal_16"
             android:maxLines="1"/>
     <TextView
@@ -35,7 +34,6 @@
         android:fontFamily="sans-serif-medium"
         android:textSize="14sp"
         android:layout_toRightOf="@id/iv_avatar_group"
-        android:layout_marginLeft="@dimen/spacing_normal_16"
         android:layout_marginRight="@dimen/spacing_tiny_4"
         android:layout_below="@id/tv_title_group"/>
     <TextView

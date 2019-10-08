@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_chat_group.*
 import kotlinx.android.synthetic.main.item_chat_single.*
@@ -86,9 +87,13 @@ class ChatAdapter(val listener : (ChatItem)->Unit) : RecyclerView.Adapter<ChatAd
 
         override fun bind(item:ChatItem, listener: (ChatItem) -> Unit){
             if (item.avatar == null) {
+                Glide.with(itemView)
+                    .clear(iv_avatar_single)
                 //iv_avatar_single.setInitials(item.initials) //TODO setInitials
             } else {
-                //TODO set drawable
+                Glide.with(itemView)
+                    .load(item.avatar)
+                    .into(iv_avatar_single)
             }
 
             sv_indicator.visibility = if(item.isOnline) View.VISIBLE else View.GONE
@@ -135,7 +140,11 @@ class ChatAdapter(val listener : (ChatItem)->Unit) : RecyclerView.Adapter<ChatAd
 
             tv_title_group.text = item.title
             tv_message_group.text = item.shortDescription
-            tv_message_author.text = item.author
+
+            with(tv_message_author) {
+                visibility = if (item.messageCount > 0) View.VISIBLE else View.GONE
+                text = item.author
+            }
             itemView.setOnClickListener{
                 listener.invoke(item)
             }
