@@ -45,4 +45,7 @@ class TextDrawable: Drawable() {
     override fun setColorFilter(cf: ColorFilter?) {
         paint.colorFilter = cf
     }
+    fun setTextSize(size: Float) {
+        paint.textSize = size
+    }
 }

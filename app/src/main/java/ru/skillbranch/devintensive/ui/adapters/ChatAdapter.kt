@@ -89,7 +89,7 @@ class ChatAdapter(val listener : (ChatItem)->Unit) : RecyclerView.Adapter<ChatAd
             if (item.avatar == null) {
                 Glide.with(itemView)
                     .clear(iv_avatar_single)
-                //iv_avatar_single.setInitials(item.initials) //TODO setInitials
+                iv_avatar_single.setInitials(item.initials) //TODO setInitials
             } else {
                 Glide.with(itemView)
                     .load(item.avatar)
@@ -151,3 +151,4 @@ class ChatAdapter(val listener : (ChatItem)->Unit) : RecyclerView.Adapter<ChatAd
         }
     }
 }
+

@@ -112,4 +112,11 @@ class AvatarImageView @JvmOverloads constructor(
 
         canvas?.drawCircle(x, y, radius, paint)
     }
+    fun setInitials(initials: String) {
+        if (!initials.isNullOrBlank()) {
+            textDrawable.text = initials
+            textDrawable.setTextSize(45f)
+            setImageDrawable(textDrawable)
+        }
+    }
 }
