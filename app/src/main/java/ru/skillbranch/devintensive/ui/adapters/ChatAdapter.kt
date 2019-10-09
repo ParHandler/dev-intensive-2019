@@ -125,7 +125,7 @@ class ChatAdapter(val listener : (ChatItem)->Unit) : RecyclerView.Adapter<ChatAd
         }
 
         override fun bind(item:ChatItem, listener: (ChatItem) -> Unit){
-            //iv_avatar_group.setInitials(item.title[0].toString()) //TODO setInitials
+            iv_avatar_group.setInitials(item.title[0].toString())
 
 
             with(tv_date_group) {
