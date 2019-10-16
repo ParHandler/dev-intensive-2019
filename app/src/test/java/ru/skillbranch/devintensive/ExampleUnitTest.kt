@@ -6,6 +6,7 @@ import org.junit.Test
 import ru.skillbranch.devintensive.extensions.*
 
 import ru.skillbranch.devintensive.models.*
+import ru.skillbranch.devintensive.models.data.Chat
 import ru.skillbranch.devintensive.models.data.User
 import ru.skillbranch.devintensive.utils.Utils
 import java.util.*
@@ -104,8 +105,8 @@ class ExampleUnitTest {
     @Test
     fun test_abstract_factory(){
         val user = User.makeUser("Куниловский Евгений")
-        val txtMessage = BaseMessage.makeMessage(user, Chat("0"), payload = "any text message", type = "text")
-        val imgMessage = BaseMessage.makeMessage(user, Chat("0"), payload = "any image url", type = "image")
+        val txtMessage = BaseMessage.makeMessage(user, Chat("0", "") , payload = "any text message", type = "text")
+        val imgMessage = BaseMessage.makeMessage(user, Chat("0", ""), payload = "any image url", type = "image")
 
         when(imgMessage){
             is BaseMessage -> println("this is base message")

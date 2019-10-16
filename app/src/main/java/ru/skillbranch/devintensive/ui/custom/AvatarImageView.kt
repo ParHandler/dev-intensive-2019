@@ -28,7 +28,7 @@ class AvatarImageView @JvmOverloads constructor(
 
 
     private var borderColor = AvatarImageView.DEFAULT_BORDER_COLOR
-    private var borderWidth = (context as Activity).convertDpToPx(AvatarImageView.DEFAULT_BORDER_WIDTH_DP)
+    private var borderWidth = context.convertDpToPx(AvatarImageView.DEFAULT_BORDER_WIDTH_DP)
 
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG)
     private val clipPath = Path()
@@ -37,7 +37,9 @@ class AvatarImageView @JvmOverloads constructor(
     private var textDrawable = TextDrawable().apply { setupTextDrawable(this) }
 
     init {
+
         if (attrs != null) {
+
             val a = context.obtainStyledAttributes(attrs, R.styleable.AvatarImageView)
 
             borderColor = a.getColor(
@@ -52,6 +54,8 @@ class AvatarImageView @JvmOverloads constructor(
 
             a.recycle()
         }
+
+
     }
 
     private fun setupTextDrawable(textDrawable: TextDrawable) {
@@ -92,6 +96,7 @@ class AvatarImageView @JvmOverloads constructor(
             textDrawable.text = text
             setImageDrawable(textDrawable)
         } else setImageResource(R.drawable.avatar_default)
+
     }
 
     override fun onDraw(canvas: Canvas?) {
