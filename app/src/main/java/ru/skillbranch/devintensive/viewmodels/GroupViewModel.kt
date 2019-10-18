@@ -32,5 +32,10 @@ class GroupViewModel : ViewModel() {
             else it
         }
     }
+
+    fun handleSearchQuery(query: String?) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
     private fun loadUsers(): List<UserItem> = groupRepository.loadUsers().map { it.toUserItem() }
 }
