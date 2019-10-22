@@ -5,6 +5,7 @@ import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.children
@@ -14,12 +15,12 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.chip.Chip
 import kotlinx.android.synthetic.main.activity_group.*
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_main.toolbar
 import ru.skillbranch.devintensive.R
 import ru.skillbranch.devintensive.models.data.UserItem
 import ru.skillbranch.devintensive.ui.adapters.UserAdapter
 import ru.skillbranch.devintensive.viewmodels.GroupViewModel
+import kotlinx.android.synthetic.main.activity_group.fab as fab
+
 
 class GroupActivity : AppCompatActivity() {
 
@@ -54,8 +55,19 @@ class GroupActivity : AppCompatActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        return if(item?.itemId == android.R.id.home) {
+            finish()
+            overridePendingTransition(R.anim.idle, R.anim.bottom_down)
+            true
+        }else {
+            return super.onOptionsItemSelected(item)
+        }
+    }
+
     private fun initToolbar() {
         setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     private fun initViews() {
@@ -66,12 +78,25 @@ class GroupActivity : AppCompatActivity() {
             layoutManager = LinearLayoutManager(this@GroupActivity)
             addItemDecoration(divider)
         }
+        fab.setOnClickListener{
+            viewModel.handleCreateGroup()
+            finish()
+            overridePendingTransition(R.anim.idle, R.anim.bottom_down)
+        }
     }
 
     private fun initViewModel() {
         viewModel = ViewModelProviders.of(this).get(GroupViewModel::class.java)
         viewModel.getUserData().observe(this, Observer { userAdapter.updateData(it) })
-        viewModel.getSelectedData().observe(this, Observer { updateChips(it) })
+        viewModel.getSelectedData().observe(this, Observer {
+            updateChips(it)
+            toggleFab(it.size>1)
+        })
+    }
+
+    private fun toggleFab(isShow: Boolean) {
+        if(isShow) fab.show()
+        else fab.hide()
     }
 
     private fun addChipToGroup(user: UserItem) {
