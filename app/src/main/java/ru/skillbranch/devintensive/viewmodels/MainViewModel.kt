@@ -4,7 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
+import ru.skillbranch.devintensive.data.managers.CacheManager
 import ru.skillbranch.devintensive.extensions.mutableLiveData
+import ru.skillbranch.devintensive.models.data.Chat
 import ru.skillbranch.devintensive.models.data.ChatItem
 import ru.skillbranch.devintensive.models.data.UserItem
 import ru.skillbranch.devintensive.repositories.ChatRepository
@@ -38,6 +40,9 @@ class MainViewModel: ViewModel() {
         val chat = chatRepository.find(chatId)
         chat ?: return
         chatRepository.update(chat.copy(isArchived = true))
+
+        CacheManager.insertChat(Chat("-1", "Архив чатов", chat.members))
+
     }
 
     fun restoreFromArchive(chatId: String){
