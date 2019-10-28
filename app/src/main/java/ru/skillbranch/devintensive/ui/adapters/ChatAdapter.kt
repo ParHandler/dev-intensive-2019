@@ -173,7 +173,6 @@ class ChatAdapter(val listener : (ChatItem)->Unit) : RecyclerView.Adapter<ChatAd
                     .into(iv_avatar_archive)
             }
 
-            sv_indicator.visibility = if(item.isOnline) View.VISIBLE else View.GONE
             with(tv_date_archive) {
                 visibility = if(item.lastMessageDate !== null) View.VISIBLE else View.GONE
                 text = item.lastMessageDate
@@ -186,6 +185,7 @@ class ChatAdapter(val listener : (ChatItem)->Unit) : RecyclerView.Adapter<ChatAd
 
             tv_title_archive.text = "Архив чатов"
             tv_message_archive.text = item.shortDescription
+            tv_message_author_archive.text = item.author
             itemView.setOnClickListener{
                 listener.invoke(item)
             }

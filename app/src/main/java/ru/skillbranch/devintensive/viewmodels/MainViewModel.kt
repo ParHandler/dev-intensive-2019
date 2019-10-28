@@ -8,17 +8,32 @@ import ru.skillbranch.devintensive.data.managers.CacheManager
 import ru.skillbranch.devintensive.extensions.mutableLiveData
 import ru.skillbranch.devintensive.models.data.Chat
 import ru.skillbranch.devintensive.models.data.ChatItem
-import ru.skillbranch.devintensive.models.data.UserItem
+import ru.skillbranch.devintensive.models.data.ChatType
 import ru.skillbranch.devintensive.repositories.ChatRepository
-import ru.skillbranch.devintensive.utils.DataGenerator
+
 
 class MainViewModel: ViewModel() {
     private val query = mutableLiveData("")
     private val chatRepository = ChatRepository
     private val chats = Transformations.map(chatRepository.loadChats()) {chats->
-        return@map chats.filter { !it.isArchived }
-            .map { it.toChatItem() }
+        return@map chats
+            .asSequence()
+            .groupBy { it.isArchived }
+            .map {
+                if (it.key) {
+                    val last = it.value.last()
+                    var mcount = 0
+                    it.value.forEach {
+                        mcount += it.messages.filter { !it.isReaded }.count()
+                    }
+                    listOf(last.toChatItem().copy(id = "-1", messageCount = mcount))
+                } else {
+                    it.value.map { it.toChatItem() }
+                }
+            }
+            .reduce { acc, list ->  acc+list}
             .sortedBy { it.id.toInt() }
+            .toList()
     }
 
     fun getChatData() : LiveData<List<ChatItem>> {
@@ -40,9 +55,6 @@ class MainViewModel: ViewModel() {
         val chat = chatRepository.find(chatId)
         chat ?: return
         chatRepository.update(chat.copy(isArchived = true))
-
-        CacheManager.insertChat(Chat("-1", "Архив чатов", chat.members))
-
     }
 
     fun restoreFromArchive(chatId: String){
