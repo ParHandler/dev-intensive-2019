@@ -163,15 +163,6 @@ class ChatAdapter(val listener : (ChatItem)->Unit) : RecyclerView.Adapter<ChatAd
         }
 
         override fun bind(item:ChatItem, listener: (ChatItem) -> Unit){
-            if (item.avatar == null) {
-                Glide.with(itemView)
-                    .clear(iv_avatar_archive)
-                iv_avatar_archive.setInitials(item.initials) //TODO setInitials
-            } else {
-                Glide.with(itemView)
-                    .load(item.avatar)
-                    .into(iv_avatar_archive)
-            }
 
             with(tv_date_archive) {
                 visibility = if(item.lastMessageDate !== null) View.VISIBLE else View.GONE
@@ -186,6 +177,7 @@ class ChatAdapter(val listener : (ChatItem)->Unit) : RecyclerView.Adapter<ChatAd
             tv_title_archive.text = "Архив чатов"
             tv_message_archive.text = item.shortDescription
             tv_message_author_archive.text = item.author
+
             itemView.setOnClickListener{
                 listener.invoke(item)
             }

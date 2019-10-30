@@ -41,7 +41,8 @@ data class Chat(
                 lastMessageShort().first,
                 unreadableMessageCount(),
                 lastMessageDate()?.shortFormat(),
-                user.isOnline
+                user.isOnline,
+                if(isArchived) ChatType.ARCHIVE else ChatType.SINGLE
             )
         } else {
             ChatItem(

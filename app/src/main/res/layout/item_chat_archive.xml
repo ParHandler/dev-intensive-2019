@@ -11,7 +11,8 @@
         android:layout_width="@dimen/avatar_item_size"
         android:layout_height="@dimen/avatar_item_size"
         android:layout_alignParentLeft="true"
-        tools:src="@tools:sample/avatars"/>
+        android:src="@drawable/ic_archive_black_16dp"
+        />
 
 
     <TextView
