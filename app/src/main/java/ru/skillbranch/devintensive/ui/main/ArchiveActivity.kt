@@ -3,6 +3,7 @@ package ru.skillbranch.devintensive.ui.main
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,15 +15,19 @@ import ru.skillbranch.devintensive.ui.adapters.ChatAdapter
 import ru.skillbranch.devintensive.ui.adapters.ChatItemTouchHelperCallback
 import ru.skillbranch.devintensive.ui.group.GroupActivity
 import ru.skillbranch.devintensive.viewmodels.MainViewModel
+import androidx.lifecycle.Observer
+import ru.skillbranch.devintensive.viewmodels.ArchiveViewModel
 
 class ArchiveActivity : AppCompatActivity() {
 
     private lateinit var chatAdapter: ChatAdapter
-    private lateinit var viewModel: MainViewModel
+    private lateinit var viewModel: ArchiveViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_archive)
+        initViews()
+        initViewModel()
     }
 
     private fun initViews() {
@@ -31,15 +36,7 @@ class ArchiveActivity : AppCompatActivity() {
         }
         val divider = DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
         val touchCallback = ChatItemTouchHelperCallback(chatAdapter){
-            val chatId = it.id
-            viewModel.addToArchive(chatId)
-            Snackbar.make(
-                rv_archive_list,
-                "Вы точно хотите добавить ${it.title} в архив?",
-                Snackbar.LENGTH_LONG
-            ).setAction(R.string.undo_string){
-                viewModel.restoreFromArchive(chatId)
-            }.show()
+            viewModel.restoreFromArchive(it.id)
         }
         val touchHelper = ItemTouchHelper(touchCallback)
         touchHelper.attachToRecyclerView(rv_archive_list)
@@ -49,13 +46,11 @@ class ArchiveActivity : AppCompatActivity() {
             layoutManager = LinearLayoutManager(this@ArchiveActivity)
             addItemDecoration(divider)
         }
+    }
 
-
-        fab.setOnClickListener{
-            val intent = Intent(this, GroupActivity::class.java)
-            startActivity(intent)
-        }
-
+    private fun initViewModel() {
+        viewModel = ViewModelProviders.of(this).get(ArchiveViewModel::class.java)
+        viewModel.getChatData().observe(this, Observer { chatAdapter.updateData(it) })
     }
 
 }
