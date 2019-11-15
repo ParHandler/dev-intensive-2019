@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_archive.*
-import kotlinx.android.synthetic.main.activity_main.*
 import ru.skillbranch.devintensive.R
 import ru.skillbranch.devintensive.ui.adapters.ChatAdapter
 import ru.skillbranch.devintensive.ui.adapters.ChatItemTouchHelperCallback
@@ -26,8 +25,13 @@ class ArchiveActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_archive)
+        initToolbar()
         initViews()
         initViewModel()
+    }
+
+    private fun initToolbar() {
+        setSupportActionBar(toolbar)
     }
 
     private fun initViews() {
@@ -52,5 +56,4 @@ class ArchiveActivity : AppCompatActivity() {
         viewModel = ViewModelProviders.of(this).get(ArchiveViewModel::class.java)
         viewModel.getChatData().observe(this, Observer { chatAdapter.updateData(it) })
     }
-
 }
