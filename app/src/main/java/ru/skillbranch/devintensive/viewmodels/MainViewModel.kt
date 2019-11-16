@@ -26,7 +26,7 @@ class MainViewModel: ViewModel() {
                     it.value.forEach {
                         mcount += it.messages.filter { !it.isReaded }.count()
                     }
-                    listOf(last.toChatItem().copy(id = "-1", messageCount = mcount))
+                    listOf(last.toChatItem().copy(id = "-1", messageCount = mcount, chatType = ChatType.ARCHIVE))
                 } else {
                     it.value.map { it.toChatItem() }
                 }
