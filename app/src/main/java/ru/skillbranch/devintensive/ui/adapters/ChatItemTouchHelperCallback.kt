@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import ru.skillbranch.devintensive.R
 import ru.skillbranch.devintensive.models.data.ChatItem
+import ru.skillbranch.devintensive.models.data.ChatType
 
 class ChatItemTouchHelperCallback(
     val adapter: ChatAdapter,
@@ -59,12 +60,22 @@ class ChatItemTouchHelperCallback(
         actionState: Int,
         isCurrentlyActive: Boolean
     ) {
-        if(actionState == ItemTouchHelper.ACTION_STATE_SWIPE){
-            val itemView = viewHolder.itemView
-            drawBackground(canvas, itemView, dX)
-            drawIcon(canvas, itemView, dX)
-        }
-        super.onChildDraw(canvas, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+
+            if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
+                val itemView = viewHolder.itemView
+                drawBackground(canvas, itemView, dX)
+                drawIcon(canvas, itemView, dX)
+            }
+            super.onChildDraw(
+                canvas,
+                recyclerView,
+                viewHolder,
+                dX,
+                dY,
+                actionState,
+                isCurrentlyActive
+            )
+
     }
 
     private fun drawIcon(canvas: Canvas, itemView: View, dX: Float) {
