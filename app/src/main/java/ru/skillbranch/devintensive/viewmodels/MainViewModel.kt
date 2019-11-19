@@ -16,6 +16,26 @@ class MainViewModel: ViewModel() {
     private val query = mutableLiveData("")
     private val chatRepository = ChatRepository
     private val chats = Transformations.map(chatRepository.loadChats()) {chats->
+        //TODO Создание элемента списка "Архив чатов"
+        /*
+Необходимо реализовать верстку элемента списка согласно макетам
++1
+Сверстай элемента списка, он должен содержать в себе следующие View:
+Иконку элемента (статический drawable)
+Заголовок (статический текст "Архив чатов")
+Имя автора последнего сообщения@+id/tv_message_author_archive
+Текст последнего сообщения@+id/tv_message_archive
+Дата последнего сообщения@+id/tv_date_archive
+Количество непрочитанных сообщений@+id/tv_counter_archive
+
+ArchiveItem должен реализовывать следующий функционал : При имеющихся архтвных чатах первый элемент
+*  списка rv_chat_list (MainActivity) должен являться item_chat_archive, количество сообщений в нем
+* tv_archive_counter должно быть равно сумме непрочитанных сообщений архивных чатов. Отображаемое
+* сообщение tv_message_archive и его автор tv_message_author_archive должны соответствовать самому
+* последнему входящему сообщению в архивных чатах. При клике на ArchiveItem (item_chat_archive)
+* должно открываеться ArchiveActivity. Не отображать ArchiveItem (item_chat_archive) если нет
+* зархивированных чатов. Свайп на ArchiveItem не должен срабатывать
+         */
         return@map chats
             .asSequence()
             .groupBy { it.isArchived }
