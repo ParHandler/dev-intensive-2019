@@ -4,8 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
+import ru.skillbranch.devintensive.extensions.insertIf
 import ru.skillbranch.devintensive.data.managers.CacheManager
 import ru.skillbranch.devintensive.extensions.mutableLiveData
+import ru.skillbranch.devintensive.extensions.shortFormat
+import ru.skillbranch.devintensive.extensions.shortMessage
 import ru.skillbranch.devintensive.models.data.Chat
 import ru.skillbranch.devintensive.models.data.ChatItem
 import ru.skillbranch.devintensive.models.data.ChatType
@@ -15,9 +18,8 @@ import ru.skillbranch.devintensive.repositories.ChatRepository
 class MainViewModel: ViewModel() {
     private val query = mutableLiveData("")
     private val chatRepository = ChatRepository
-    private val chats = Transformations.map(chatRepository.loadChats()) {chats->
-        //TODO Создание элемента списка "Архив чатов"
-        /*
+    //TODO Создание элемента списка "Архив чатов"
+    /*
 Необходимо реализовать верстку элемента списка согласно макетам
 +1
 Сверстай элемента списка, он должен содержать в себе следующие View:
@@ -35,25 +37,26 @@ ArchiveItem должен реализовывать следующий функ�
 * последнему входящему сообщению в архивных чатах. При клике на ArchiveItem (item_chat_archive)
 * должно открываеться ArchiveActivity. Не отображать ArchiveItem (item_chat_archive) если нет
 * зархивированных чатов. Свайп на ArchiveItem не должен срабатывать
-         */
-        return@map chats
-            .asSequence()
-            .groupBy { it.isArchived }
-            .map {
-                if (it.key) {
-                    val last = it.value.last()
-                    var mcount = 0
-                    it.value.forEach {
-                        mcount += it.messages.filter { !it.isReaded }.count()
-                    }
-                    listOf(last.toChatItem().copy(id = "-1", messageCount = mcount, chatType = ChatType.ARCHIVE))
-                } else {
-                    it.value.map { it.toChatItem() }
-                }
-            }
-            .reduce { acc, list ->  acc+list}
-            .sortedBy { it.id.toInt() }
-            .toList()
+     */
+    private val chats = Transformations.map(chatRepository.loadChats()){chats ->
+        val allArchivedMessages = chats.filter { it.isArchived }
+            .flatMap { it.messages }
+            .sortedBy { it.date.time }
+        val lastMessage = allArchivedMessages.lastOrNull()
+        val (lastMessageShort, lastMessageAuthor)= shortMessage(lastMessage)
+        chats.orEmpty()
+            .filter { !it.isArchived }
+            .map { it.toChatItem() }
+            .sortedBy { it.id }
+            .toMutableList()
+            .insertIf(
+                ChatItem.archiveItem(
+                    lastMessageShort,
+                    allArchivedMessages.size,
+                    lastMessage?.date?.shortFormat() ?: "Никогда",
+                    lastMessageAuthor
+                ),
+                0) { chats.any { it.isArchived }}
     }
 
     fun getChatData() : LiveData<List<ChatItem>> {

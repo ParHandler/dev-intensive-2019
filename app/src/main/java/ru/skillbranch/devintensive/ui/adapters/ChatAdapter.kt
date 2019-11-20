@@ -70,6 +70,7 @@ class ChatAdapter(val listener : (ChatItem)->Unit) : RecyclerView.Adapter<ChatAd
         val diffResult =DiffUtil.calculateDiff(diffCallback)
         items = data
         diffResult.dispatchUpdatesTo(this)
+        notifyDataSetChanged()
     }
     abstract inner class ChatItemViewHolder(convertView: View) : RecyclerView.ViewHolder(convertView), LayoutContainer{
         override val containerView: View?
