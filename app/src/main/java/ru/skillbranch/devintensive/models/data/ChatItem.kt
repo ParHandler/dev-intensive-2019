@@ -19,7 +19,7 @@ data class ChatItem (
                 "-1",
                 null,
                 "",
-                "",
+                "Архив чатов",
                 shortDescription,
                 messageCount,
                 lastMessageDate,

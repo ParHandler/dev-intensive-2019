@@ -363,6 +363,19 @@ object DataGenerator {
                 )
             )
         }
+        val (lastVisit: Date?, isOnline: Boolean) = randomDateAndOnline()
+        list.add(
+            User(
+                "1000",
+                "",
+                "",
+                maleAvatars.random(true),
+                (0..Short.MAX_VALUE).random(),
+                (0..Short.MAX_VALUE).random(),
+                lastVisit,
+                isOnline
+            )
+        )
         return list
     }
 
