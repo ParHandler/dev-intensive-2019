@@ -170,8 +170,8 @@ class ChatAdapter(val listener : (ChatItem)->Unit) : RecyclerView.Adapter<ChatAd
             tv_title_archive.text = "Архив чатов"
             tv_message_archive.text = item.shortDescription
             tv_message_author_archive.text = when(item.chatType){
-                ChatType.SINGLE -> item.title
-                else -> item.author
+                ChatType.SINGLE -> "@${item.title}"
+                else -> "@${item.author}"
             }
 
             itemView.setOnClickListener{
